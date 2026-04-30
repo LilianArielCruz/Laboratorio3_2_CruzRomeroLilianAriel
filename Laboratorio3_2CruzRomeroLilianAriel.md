@@ -61,13 +61,18 @@ Nivel Lógico,Departamento / Zona,ID VLAN,Subred Asociada,Gateway (IP Router)
 ## 5. Realización: Configuración del Router (Ubuntu Server)
 El router actúa como la pieza central de la red, gestionando el tráfico entre las diferentes VLANs y hacia la red externa (Internet).
 
+
 ![sudo apt install vlan](Imagenes/1.jpeg)
+
 
 ### 5.1. Configuración de Interfaces y VLANs
 Se instaló el paquete `vlan` y se configuraron las sub-interfaces en el archivo Netplan (`/etc/netplan/50-cloud-init.yaml`). Cada sub-interfaz (vlan10, vlan20, vlan30, vlan40) se asoció a la interfaz física `enp0s8`.
 
 * Editar la configuracion de las vlans:
+
+
 ![Editar la configuracion de las vlans](Imagenes/8.jpeg)
+
 
 ### 5.2. Enrutamiento y NAT
 Para permitir la navegación de los departamentos, se habilitó el reenvío de paquetes en el kernel mediante la edición de `/etc/sysctl.conf` estableciendo `net.ipv4.ip_forward=1`. 
@@ -88,8 +93,10 @@ Se configuró la interfaz virtual `eth0.40` con los siguientes parámetros:
 - **IP:** 192.168.40.2/29
 - **Gateway:** 192.168.40.1
 - **Archivo:** `/etc/network/interfaces`
+
   
-* Configuracion de red de VLAN Contabilidad
+* Configuración de red de VLAN Contabilidad
+  
   
 ![Configurar en alpine VLAN Contabilidad](Imagenes/2.jpeg)
 
@@ -103,14 +110,23 @@ Se configuró la interfaz virtual `eth0.30`:
 ## 7. Pruebas de Funcionamiento y Resultados
 * **Conectividad Interna:**
   * Ping de Contabilidad al router:
+
+
     ![Conexion de Contabilidad al router](Imagenes/3.jpeg)
 
+
   * Ping de Ventas al router:
-    ![Conexion de ventas hacia el router](Imagenes/5.jpeg)
+
+
+   ![Conexion de ventas hacia el router](Imagenes/5.jpeg)
 
 
 * **Conectividad Externa:** Se confirmó que Contabilidad tiene acceso a Internet (ping a 8.8.8.8 exitoso) mientras que Ventas deberia estar bloqueado.
+
+  
 ![Conectividad Contabilidad](Imagenes/4.jpeg)
+
+
 ![Conectividad ventas](Imagenes/6.jpeg)
 
 **Como vemos no esta bloqueado por lo que debemos configurar lo siguiente:**
@@ -175,6 +191,7 @@ Se configuró la interfaz virtual `eth0.30`:
 
 * **Aislamiento:** Se verificó que las reglas de denegación impiden que la DMZ inicie conexiones hacia las redes internas de administración.
 *  Ventas no tiene acceso a Contabilidad
+  
 ![Ventas no tiene acceso a Contabilidad](Imagenes/21.jpeg)
 
 ## 7. Conclusiones
