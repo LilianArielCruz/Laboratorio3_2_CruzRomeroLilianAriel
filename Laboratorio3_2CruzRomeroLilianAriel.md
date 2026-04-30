@@ -121,16 +121,15 @@ Se configuró la interfaz virtual `eth0.30`:
    ![Conexion de ventas hacia el router](Imagenes/5.jpeg)
 
 
-* **Conectividad Externa:** Se confirmó que Contabilidad tiene acceso a Internet (ping a 8.8.8.8 exitoso) mientras que Ventas deberia estar bloqueado.
+  * **Conectividad Externa:** Se confirmó que Contabilidad tiene acceso a Internet (ping a 8.8.8.8 exitoso) mientras que Ventas debería        estar bloqueado.
 
-  
-![Conectividad Contabilidad](Imagenes/4.jpeg)
+     ![Conectividad Contabilidad](Imagenes/4.jpeg)
 
 
-![Conectividad ventas](Imagenes/6.jpeg)
+    ![Conectividad ventas](Imagenes/6.jpeg)
 
-**Como vemos no esta bloqueado por lo que debemos configurar lo siguiente:**
-* Instalamos ufw
+  **Como vemos no esta bloqueado por lo que debemos configurar lo siguiente:**
+  * Instalamos ufw
 
   ![Instalamos ufw](Imagenes/7.jpeg)
   
@@ -193,6 +192,31 @@ Se configuró la interfaz virtual `eth0.30`:
 *  Ventas no tiene acceso a Contabilidad
   
 ![Ventas no tiene acceso a Contabilidad](Imagenes/21.jpeg)
+
+
+### 7.1. Validación de Conectividad Inter-VLAN (SSH)
+Para verificar la correcta segmentación y el acceso administrativo, se ejecutaron conexiones SSH desde el host de TI hacia el resto de las subredes:
+
+
+![Pruebas de conexión SSH exitosas](Imagenes/25.jpeg)
+
+
+*Secuencia de acceso remoto desde TI hacia DMZ, Ventas y Contabilidad.*
+### 7.2. Pruebas de Gestión desde el Segmento Ventas
+Se validó que el personal de ventas puede acceder a los servidores de la DMZ para tareas de supervisión:
+
+![Acceso SSH desde Ventas a DMZ](Imagenes/26.jpeg)
+
+
+*Conexiones exitosas desde el host Ventas hacia los servidores alojados en la VLAN 10.*
+
+### 7.3. Validación Final: Segmento Contabilidad
+Finalmente, se comprobó que el área de Contabilidad posee los privilegios de red necesarios para alcanzar los servicios críticos y otros departamentos:
+
+![Acceso SSH desde Contabilidad](Imagenes/27.jpeg)
+
+
+*Pruebas de salto SSH desde el segmento Contabilidad hacia DMZ y Ventas.*
 
 ## 7. Conclusiones
 La ejecución de este laboratorio permitió validar que la segmentación mediante VLANs bajo el estándar IEEE 802.1Q es una estrategia crítica para la seguridad y el rendimiento en redes organizacionales. A partir de los resultados obtenidos, se concluye lo siguiente:  
