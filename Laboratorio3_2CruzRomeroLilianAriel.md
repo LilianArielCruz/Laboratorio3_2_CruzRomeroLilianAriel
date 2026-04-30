@@ -54,17 +54,17 @@ Nivel Lógico,Departamento / Zona,ID VLAN,Subred Asociada,Gateway (IP Router)
 +------+-------------------------------------------------+
 
 ```
-![Diagrama en Cisco Packet Tracer](23.jpeg)
+![Diagrama en Cisco Packet Tracer](Imagenes/23.jpeg)
 
 ## 5. Realización: Configuración del Router (Ubuntu Server)
 El router actúa como la pieza central de la red, gestionando el tráfico entre las diferentes VLANs y hacia la red externa (Internet).
 
-![sudo apt install vlan](1.jpeg)
+![sudo apt install vlan](Imagenes/1.jpeg)
 
 ### 5.1. Configuración de Interfaces y VLANs
 Se instaló el paquete `vlan` y se configuraron las sub-interfaces en el archivo Netplan (`/etc/netplan/50-cloud-init.yaml`). Cada sub-interfaz (vlan10, vlan20, vlan30, vlan40) se asoció a la interfaz física `enp0s8`.
 
-![Editar la configuracion de las vlans](8.jpeg)
+![Editar la configuracion de las vlans](Imagenes/8.jpeg)
 
 ### 5.2. Enrutamiento y NAT
 Para permitir la navegación de los departamentos, se habilitó el reenvío de paquetes en el kernel mediante la edición de `/etc/sysctl.conf` estableciendo `net.ipv4.ip_forward=1`. 
@@ -86,7 +86,7 @@ Se configuró la interfaz virtual `eth0.40` con los siguientes parámetros:
 - **Gateway:** 192.168.40.1
 - **Archivo:** `/etc/network/interfaces`
 
-![Configurar en alpine VLAN Contabilidad](2.jpeg)
+![Configurar en alpine VLAN Contabilidad](Imagenes/2.jpeg)
 
 ### 6.2. Configuración en PC Ventas (VLAN 30)
 Se configuró la interfaz virtual `eth0.30`:
@@ -96,48 +96,48 @@ Se configuró la interfaz virtual `eth0.30`:
 
 ## 7. Pruebas de Funcionamiento y Resultados
 * **Conectividad Interna:**
-![Conexion de Contabilidad al router](3.jpeg)
+![Conexion de Contabilidad al router](Imagenes/3.jpeg)
 
-![Conexion de ventas hacia el router](5.jpeg)
+![Conexion de ventas hacia el router](Imagenes/5.jpeg)
 
 * **Conectividad Externa:** Se confirmó que Contabilidad tiene acceso a Internet (ping a 8.8.8.8 exitoso) mientras que Ventas deberia estar bloqueado.
-![Conectividad Contabilidad](4.jpeg)
-![Conectividad ventas](6.jpeg)
+![Conectividad Contabilidad](Imagenes/4.jpeg)
+![Conectividad ventas](Imagenes/6.jpeg)
 
 **Como vemos no esta bloqueado por lo que debemos configurar lo siguiente:**
 
-![Instalamos ufw](7.jpeg)
+![Instalamos ufw](Imagenes/7.jpeg)
 
-![Habilitamos ssh](14.jpeg)
+![Habilitamos ssh](Imagenes/14.jpeg)
 
-![Habilitamos que ufw inicie desde el arranque](9.jpeg)
+![Habilitamos que ufw inicie desde el arranque](Imagenes/9.jpeg)
 
-![Damos permisos de TI a todas las VLANS](10.jpeg)
+![Damos permisos de TI a todas las VLANS](Imagenes/10.jpeg)
 
-![Permisos de ventas a DMZ](11.jpeg)
+![Permisos de ventas a DMZ](Imagenes/11.jpeg)
 
-![Permisos de contabilidad a DZ y ventas](12.jpeg)
+![Permisos de contabilidad a DZ y ventas](Imagenes/12.jpeg)
 
-![Permisos denegados de la DMZ hacia todos](13.jpeg)
+![Permisos denegados de la DMZ hacia todos](Imagenes/13.jpeg)
 
-![Permisos denegados de ventas a TI y contabilidad](20.jpeg)
+![Permisos denegados de ventas a TI y contabilidad](Imagenes/20.jpeg)
 
-![Permisos denegados de contabilidad a TI](15.jpeg)
+![Permisos denegados de contabilidad a TI](Imagenes/15.jpeg)
 
-![Configuramos las reglas de internet](16.jpeg)
+![Configuramos las reglas de internet](Imagenes/16.jpeg)
 
-![Configuracion de acceso a internet](17.jpeg)
+![Configuracion de acceso a internet](Imagenes/17.jpeg)
 
-![Ventas ya no iene conectividad a internet](18.jpeg)
+![Ventas ya no iene conectividad a internet](Imagenes/18.jpeg)
 
-![Contabilidad sigue teniendo conectividad a google](19.jpeg)
+![Contabilidad sigue teniendo conectividad a google](Imagenes/19.jpeg)
 
 * **Acceso Inter-VLAN:** Se validó la conexión SSH desde Contabilidad (192.168.40.2) hacia Ventas (192.168.30.2), confirmando que el router permite el salto entre estas VLANs específicas.
 
-![Contabilidad si tiene acceso a ventas](22.jpeg)
+![Contabilidad si tiene acceso a ventas](Imagenes/22.jpeg)
 
 * **Aislamiento:** Se verificó que las reglas de denegación impiden que la DMZ inicie conexiones hacia las redes internas de administración.
-![Ventas no tiene acceso a Contabilidad](21.jpeg)
+![Ventas no tiene acceso a Contabilidad](Imagenes/21.jpeg)
 
 ## 7. Conclusiones
 La ejecución de este laboratorio permitió validar que la segmentación mediante VLANs bajo el estándar IEEE 802.1Q es una estrategia crítica para la seguridad y el rendimiento en redes organizacionales. A partir de los resultados obtenidos, se concluye lo siguiente:  
