@@ -54,6 +54,8 @@ Nivel Lógico,Departamento / Zona,ID VLAN,Subred Asociada,Gateway (IP Router)
 +------+-------------------------------------------------+
 
 ```
+### Diagrama en Cisco Packet Tracer:
+
 ![Diagrama en Cisco Packet Tracer](Imagenes/23.jpeg)
 
 ## 5. Realización: Configuración del Router (Ubuntu Server)
@@ -64,6 +66,7 @@ El router actúa como la pieza central de la red, gestionando el tráfico entre 
 ### 5.1. Configuración de Interfaces y VLANs
 Se instaló el paquete `vlan` y se configuraron las sub-interfaces en el archivo Netplan (`/etc/netplan/50-cloud-init.yaml`). Cada sub-interfaz (vlan10, vlan20, vlan30, vlan40) se asoció a la interfaz física `enp0s8`.
 
+* Editar la configuracion de las vlans:
 ![Editar la configuracion de las vlans](Imagenes/8.jpeg)
 
 ### 5.2. Enrutamiento y NAT
@@ -85,8 +88,11 @@ Se configuró la interfaz virtual `eth0.40` con los siguientes parámetros:
 - **IP:** 192.168.40.2/29
 - **Gateway:** 192.168.40.1
 - **Archivo:** `/etc/network/interfaces`
-
+  
+* Configuracion de red de VLAN Contabilidad
+  
 ![Configurar en alpine VLAN Contabilidad](Imagenes/2.jpeg)
+
 
 ### 6.2. Configuración en PC Ventas (VLAN 30)
 Se configuró la interfaz virtual `eth0.30`:
@@ -96,47 +102,79 @@ Se configuró la interfaz virtual `eth0.30`:
 
 ## 7. Pruebas de Funcionamiento y Resultados
 * **Conectividad Interna:**
-![Conexion de Contabilidad al router](Imagenes/3.jpeg)
+  * Ping de Contabilidad al router:
+    ![Conexion de Contabilidad al router](Imagenes/3.jpeg)
 
-![Conexion de ventas hacia el router](Imagenes/5.jpeg)
+  * Ping de Ventas al router:
+    ![Conexion de ventas hacia el router](Imagenes/5.jpeg)
+
 
 * **Conectividad Externa:** Se confirmó que Contabilidad tiene acceso a Internet (ping a 8.8.8.8 exitoso) mientras que Ventas deberia estar bloqueado.
 ![Conectividad Contabilidad](Imagenes/4.jpeg)
 ![Conectividad ventas](Imagenes/6.jpeg)
 
 **Como vemos no esta bloqueado por lo que debemos configurar lo siguiente:**
+* Instalamos ufw
 
-![Instalamos ufw](Imagenes/7.jpeg)
+  ![Instalamos ufw](Imagenes/7.jpeg)
+  
+ * Habilitar ssh
 
-![Habilitamos ssh](Imagenes/14.jpeg)
+   ![Habilitamos ssh](Imagenes/14.jpeg)
 
-![Habilitamos que ufw inicie desde el arranque](Imagenes/9.jpeg)
+ * Habilitar que ufw se inicie desde el arranque
 
-![Damos permisos de TI a todas las VLANS](Imagenes/10.jpeg)
+   ![Habilitamos que ufw inicie desde el arranque](Imagenes/9.jpeg)
 
-![Permisos de ventas a DMZ](Imagenes/11.jpeg)
+ * Permisos de TI a todas las VLANS
+   
+   ![Damos permisos de TI a todas las VLANS](Imagenes/10.jpeg)
 
-![Permisos de contabilidad a DZ y ventas](Imagenes/12.jpeg)
+ * Permisos de Ventas a DMZ
+   
+   ![Permisos de ventas a DMZ](Imagenes/11.jpeg)
+   
+ * Permisos de contabilidad a DMZ y Ventas
 
-![Permisos denegados de la DMZ hacia todos](Imagenes/13.jpeg)
+   ![Permisos de contabilidad a DZ y ventas](Imagenes/12.jpeg)
 
-![Permisos denegados de ventas a TI y contabilidad](Imagenes/20.jpeg)
+ * Permisos denegados de DMZ hacia todos
 
-![Permisos denegados de contabilidad a TI](Imagenes/15.jpeg)
+   ![Permisos denegados de la DMZ hacia todos](Imagenes/13.jpeg)
+   
+ * Permisos denegados de ventas a TI y contabilidad
 
-![Configuramos las reglas de internet](Imagenes/16.jpeg)
+   ![Permisos denegados de ventas a TI y contabilidad](Imagenes/20.jpeg)
+   
+ * Permisos denegados de contabilidad a TI
 
-![Configuracion de acceso a internet](Imagenes/17.jpeg)
+   ![Permisos denegados de contabilidad a TI](Imagenes/15.jpeg)
+   
+ * Configuramos las reglas de internet
 
-![Ventas ya no iene conectividad a internet](Imagenes/18.jpeg)
+   ![Configuramos las reglas de internet](Imagenes/16.jpeg)
 
-![Contabilidad sigue teniendo conectividad a google](Imagenes/19.jpeg)
+ * Configuración de acceso a internet
+   
+   ![Configuración de acceso a internet](Imagenes/17.jpeg)
+
+ * Ventas ya no tiene conectividad a internet
+
+   ![Ventas ya no iene conectividad a internet](Imagenes/18.jpeg)
+   
+ * Contabilidad sigue teniendo conectividad a google
+   
+   ![Contabilidad sigue teniendo conectividad a google](Imagenes/19.jpeg)
+
 
 * **Acceso Inter-VLAN:** Se validó la conexión SSH desde Contabilidad (192.168.40.2) hacia Ventas (192.168.30.2), confirmando que el router permite el salto entre estas VLANs específicas.
+  
+*  Contabilidad Tinene acceso a Ventas:
 
 ![Contabilidad si tiene acceso a ventas](Imagenes/22.jpeg)
 
 * **Aislamiento:** Se verificó que las reglas de denegación impiden que la DMZ inicie conexiones hacia las redes internas de administración.
+*  Ventas no tiene acceso a Contabilidad
 ![Ventas no tiene acceso a Contabilidad](Imagenes/21.jpeg)
 
 ## 7. Conclusiones
