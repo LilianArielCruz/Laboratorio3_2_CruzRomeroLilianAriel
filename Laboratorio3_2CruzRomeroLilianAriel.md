@@ -1,9 +1,9 @@
 # Informe de Laboratorio 3.2: Infraestructura de Red con VLANs
 
-**Asignatura:** Infraestructura, Plataformas Tecnologicas y Redes (SIS313)
-**Semestre:** 1/2026
-**Institución:** Universidad San Francisco Xavier de Chuquisaca
-**Estudiantes:** Chambi Lopez Naydelin
+* **Asignatura:** Infraestructura, Plataformas Tecnologicas y Redes (SIS313)
+* **Semestre:** 1/2026
+* **Institución:** Universidad San Francisco Xavier de Chuquisaca
+* **Estudiantes:** Chambi Lopez Naydelin
                  Cruz Romero Lilian Ariel 
 
 
@@ -15,7 +15,8 @@ Este informe detalla la implementación de una red segmentada mediante VLANs (Vi
 * Implementar políticas de seguridad restrictivas mediante el firewall UFW.
 * Configurar estaciones de trabajo sobre Alpine Linux con interfaces virtuales específicas.
 * Validar el acceso controlado a Internet y la conectividad entre subredes.
-## 3. Esquema Logico de organizacion 
+  
+## 3. Esquema lógico de organización 
 A continuación se detalla la jerarquía de red implementada para la segmentación departamental:
 
 Nivel Lógico,Departamento / Zona,ID VLAN,Subred Asociada,Gateway (IP Router)
@@ -27,7 +28,7 @@ Nivel Lógico,Departamento / Zona,ID VLAN,Subred Asociada,Gateway (IP Router)
 * Zona Interna 2,Ventas (Operaciones),30,192.168.30.0/27,192.168.30.1
 * Zona Interna 3,Contabilidad (Finanzas),40,192.168.40.0/29,192.168.40.1
 
-## 4. Diagrama de Conexiones 
+## 4. Diagrama de conexiones 
  El flujo de datos se gestiona a través de un enlace Trunk que conecta el Router con el Switch Virtual, distribuyendo el tráfico etiquetado a cada nodo:
 
 ```
@@ -106,7 +107,24 @@ Se configuró la interfaz virtual `eth0.30`:
 - **IP:** 192.168.30.2/27
 - **Gateway:** 192.168.30.1
 - **Acceso:** Restringido a internet por políticas de firewall en el router.
+  
+### 6.3. Configuración en PC TI (VLAN 20)
+Se configuró la interfaz virtual `eth0.20`:
+- **IP:** 192.168.20.2/29
+- **Gateway:** 192.168.20.1
+- **Acceso:** Acceso a internet por políticas de firewall en el router.
 
+### 6.4. Configuración en PC Server-DMZ1 (VLAN 10)
+Se configuró la interfaz virtual `eth0.10`:
+- **IP:** 192.168.10.2/29
+- **Gateway:** 192.168.20.1
+- **Acceso:** Restringido a internet por políticas de firewall en el router.
+
+### 6.5. Configuración en PC Server-DMZ2 (VLAN 10)
+Se configuró la interfaz virtual `eth0.10`:
+- **IP:** 192.168.10.3/29
+- **Gateway:** 192.168.20.1
+- **Acceso:** Restringido a internet por políticas de firewall en el router.
 ## 7. Pruebas de Funcionamiento y Resultados
 * **Conectividad Interna:**
   * Ping de Contabilidad al router:
@@ -141,6 +159,18 @@ Se configuró la interfaz virtual `eth0.30`:
 
    ![Habilitamos que ufw inicie desde el arranque](Imagenes/9.jpeg)
 
+  **Permisos y Denegaciones entre Máquinas**
+  ```
+
+  | Equipo | Server-DMZ1 | Server-DMZ2 | TI | Ventas | Contabilidad |
+  | :----: | :---------: | :---------: | :-: | :---: | :----------: |
+  | Server-DMZ1 | ✅ | ✅ | ❌ | ❌ | ❌ |
+  | Server-DMZ2 | ✅ | ✅ | ❌ | ❌ | ❌ |
+  | TI |  ✅ | ✅ | ✅ | ✅ | ✅ |
+  | Ventas | ✅ | ✅ | ❌ | ✅ | ❌ |
+  | Contabilidad | ✅ | ✅ | ❌ | ✅ | ❌ |  
+
+  ```
  * Permisos de TI a todas las VLANS
    
    ![Damos permisos de TI a todas las VLANS](Imagenes/10.jpeg)
