@@ -218,7 +218,7 @@ Finalmente, se comprobó que el área de Contabilidad posee los privilegios de r
 
 *Pruebas de salto SSH desde el segmento Contabilidad hacia DMZ y Ventas.*
 
-## 7. Conclusiones
+## 8. Conclusiones
 La ejecución de este laboratorio permitió validar que la segmentación mediante VLANs bajo el estándar IEEE 802.1Q es una estrategia crítica para la seguridad y el rendimiento en redes organizacionales. A partir de los resultados obtenidos, se concluye lo siguiente:  
 * Optimización del Dominio de Difusión: Se logró reducir el tráfico innecesario en la red al confinar los paquetes de "broadcast" dentro de sus respectivas etiquetas (ID), evitando la saturación de interfaces en departamentos no relacionados.  
 
