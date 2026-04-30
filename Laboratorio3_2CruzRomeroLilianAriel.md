@@ -118,7 +118,7 @@ Se configuró la interfaz virtual `eth0.30`:
   * Ping de Ventas al router:
 
 
-   ![Conexion de ventas hacia el router](Imagenes/5.jpeg)
+     ![Conexion de ventas hacia el router](Imagenes/5.jpeg)
 
 
   * **Conectividad Externa:** Se confirmó que Contabilidad tiene acceso a Internet (ping a 8.8.8.8 exitoso) mientras que Ventas debería        estar bloqueado.
@@ -198,14 +198,14 @@ Se configuró la interfaz virtual `eth0.30`:
 Para verificar la correcta segmentación y el acceso administrativo, se ejecutaron conexiones SSH desde el host de TI hacia el resto de las subredes:
 
 
-![Pruebas de conexión SSH exitosas](Imagenes/25.jpeg)
+![Pruebas de conexión SSH exitosas](Imagenes/25.jpg)
 
 
 *Secuencia de acceso remoto desde TI hacia DMZ, Ventas y Contabilidad.*
 ### 7.2. Pruebas de Gestión desde el Segmento Ventas
 Se validó que el personal de ventas puede acceder a los servidores de la DMZ para tareas de supervisión:
 
-![Acceso SSH desde Ventas a DMZ](Imagenes/26.jpeg)
+![Acceso SSH desde Ventas a DMZ](Imagenes/26.jpg)
 
 
 *Conexiones exitosas desde el host Ventas hacia los servidores alojados en la VLAN 10.*
@@ -213,7 +213,7 @@ Se validó que el personal de ventas puede acceder a los servidores de la DMZ pa
 ### 7.3. Validación Final: Segmento Contabilidad
 Finalmente, se comprobó que el área de Contabilidad posee los privilegios de red necesarios para alcanzar los servicios críticos y otros departamentos:
 
-![Acceso SSH desde Contabilidad](Imagenes/27.jpeg)
+![Acceso SSH desde Contabilidad](Imagenes/27.jpg)
 
 
 *Pruebas de salto SSH desde el segmento Contabilidad hacia DMZ y Ventas.*
